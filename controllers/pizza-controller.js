@@ -4,6 +4,12 @@ const pizzaController = {
   // Get all pizzas
   getAllPizza(req, res) {
     Pizza.find({})
+      .populate({
+        path: 'comments',
+        select: '-__v',
+      })
+      .select('-__v')
+      .sort({ _id: -1 })
       .then(pizzas => res.json(pizzas))
       .catch(err => res.status(500).json(err));
   },
